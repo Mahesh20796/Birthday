@@ -7,16 +7,26 @@ import CountdownGate from './components/CountdownGate';
 import LoveNotes from './components/LoveNotes';
 import ExperienceTabs from './components/ExperienceTabs';
 
+import LoadingScreen from './components/LoadingScreen';
+import { AnimatePresence } from 'framer-motion';
+
 function App() {
+  const [loading, setLoading] = React.useState(true);
+
   return (
     <Router>
       <div className="app-container">
-        <Routes>
-          <Route path="/" element={<Landing />} />
+        <AnimatePresence>
+          {loading && <LoadingScreen onFinish={() => setLoading(false)} />}
+        </AnimatePresence>
 
-          <Route path="/birthday" element={<ExperienceTabs />} />
-          <Route path="/anniversary" element={<ExperienceTabs />} />
-        </Routes>
+        {!loading && (
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/birthday" element={<ExperienceTabs />} />
+            <Route path="/anniversary" element={<ExperienceTabs />} />
+          </Routes>
+        )}
         <LoveNotes />
       </div>
     </Router>

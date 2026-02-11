@@ -11,12 +11,35 @@ const ExperienceTabs = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState(location.pathname === '/anniversary' ? 'anniversary' : 'birthday');
+    const [shakeLocked, setShakeLocked] = useState(null);
+
+    // Target Dates
+    const targetDates = {
+        birthday: new Date(2026, 1, 12, 0, 0, 0),
+        anniversary: new Date(2026, 1, 16, 0, 0, 0)
+    };
+
+    const isLocked = (tab) => {
+        return new Date() < targetDates[tab];
+    };
 
     useEffect(() => {
-        setActiveTab(location.pathname === '/anniversary' ? 'anniversary' : 'birthday');
+        const currentTab = location.pathname === '/anniversary' ? 'anniversary' : 'birthday';
+        // Redirect back if user lands on a locked URL
+        if (isLocked(currentTab)) {
+            navigate('/birthday');
+            setActiveTab('birthday');
+        } else {
+            setActiveTab(currentTab);
+        }
     }, [location.pathname]);
 
     const handleTabChange = (tab) => {
+        if (isLocked(tab)) {
+            setShakeLocked(tab);
+            setTimeout(() => setShakeLocked(null), 500);
+            return;
+        }
         setActiveTab(tab);
         navigate(`/${tab}`);
     };
@@ -65,7 +88,8 @@ const ExperienceTabs = () => {
                 width: 'max-content',
                 maxWidth: '90vw'
             }}>
-                <button
+                <motion.button
+                    animate={shakeLocked === 'birthday' ? { x: [-10, 10, -10, 10, 0] } : {}}
                     onClick={() => handleTabChange('birthday')}
                     style={{
                         padding: '0.8rem clamp(1rem, 4vw, 2.5rem)',
@@ -74,18 +98,20 @@ const ExperienceTabs = () => {
                         background: activeTab === 'birthday' ? 'linear-gradient(45deg, #ff758c, #ff7eb3)' : 'transparent',
                         color: activeTab === 'birthday' ? 'white' : (activeTab === 'birthday' ? '#b8a1cf' : '#ff758c'),
                         fontWeight: '700',
-                        cursor: 'pointer',
+                        cursor: isLocked('birthday') ? 'not-allowed' : 'pointer',
                         transition: 'all 0.3s ease',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.4rem',
                         fontSize: 'clamp(0.85rem, 3.5vw, 1rem)',
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        opacity: isLocked('birthday') ? 0.6 : 1
                     }}
                 >
-                    <span>🎂</span> Birthday
-                </button>
-                <button
+                    <span>{isLocked('birthday') ? '🔒' : '🎂'}</span> Birthday
+                </motion.button>
+                <motion.button
+                    animate={shakeLocked === 'anniversary' ? { x: [-10, 10, -10, 10, 0] } : {}}
                     onClick={() => handleTabChange('anniversary')}
                     style={{
                         padding: '0.8rem clamp(1rem, 4vw, 2.5rem)',
@@ -94,17 +120,18 @@ const ExperienceTabs = () => {
                         background: activeTab === 'anniversary' ? 'linear-gradient(45deg, #ff2d55, #bc13fe)' : 'transparent',
                         color: activeTab === 'anniversary' ? 'white' : (activeTab === 'birthday' ? '#ff758c' : '#b8a1cf'),
                         fontWeight: '700',
-                        cursor: 'pointer',
+                        cursor: isLocked('anniversary') ? 'not-allowed' : 'pointer',
                         transition: 'all 0.3s ease',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.4rem',
                         fontSize: 'clamp(0.85rem, 3.5vw, 1rem)',
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        opacity: isLocked('anniversary') ? 0.6 : 1
                     }}
                 >
-                    <span>💍</span> Anniversary
-                </button>
+                    <span>{isLocked('anniversary') ? '🔒' : '💍'}</span> Anniversary
+                </motion.button>
             </nav>
 
             {/* Content Area with Swipe Animations */}
@@ -128,7 +155,7 @@ const ExperienceTabs = () => {
                 </AnimatePresence>
             </div>
 
-            <MusicPlayer />
+            <MusicPlayer activeTab={activeTab} />
             <Footer activeTab={activeTab} />
         </div>
     );

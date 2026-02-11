@@ -35,11 +35,7 @@ const Timer = ({ title, targetDate }) => {
     useEffect(() => {
         const calculateTimeLeft = () => {
             const now = new Date();
-            let target = new Date(now.getFullYear(), targetDate.month - 1, targetDate.day);
-
-            if (target < now) {
-                target.setFullYear(now.getFullYear() + 1);
-            }
+            const target = new Date(2026, targetDate.month - 1, targetDate.day, targetDate.hour || 0, targetDate.minute || 0, 0);
 
             const difference = target - now;
 
@@ -88,8 +84,8 @@ const Countdown = () => {
                 Countdown to Our Special Days 💕
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <Timer title="🎂 Your Birthday (Feb 12)" targetDate={{ month: 2, day: 12 }} />
-                <Timer title="💍 Our Anniversary (Feb 16)" targetDate={{ month: 2, day: 16 }} />
+                <Timer title="🎂 Your Birthday (Feb 12, 12:00 AM)" targetDate={{ month: 2, day: 12, hour: 0, minute: 0 }} />
+                <Timer title="💍 Our Anniversary (Feb 16, 12:00 AM)" targetDate={{ month: 2, day: 16, hour: 0, minute: 0 }} />
             </div>
         </motion.div>
     );

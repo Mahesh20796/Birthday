@@ -1,29 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;600;800&display=swap');
 
 :root {
-  --primary-pink: #ff758c;
-  --secondary-purple: #ff7eb3;
-  --accent-rose: #fa709a;
-  --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
-  --glass-bg: rgba(255, 255, 255, 0.15);
-  --glass-border: rgba(255, 255, 255, 0.3);
-  --text-main: #2d3436;
-  --text-light: #636e72;
+  --primary-pink: #ff4d6d;
+  --secondary-purple: #c77dff;
+  --accent-rose: #ff8fa3;
+  --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #fffbf2 100%);
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --text-main: #1a1a1a;
+  --text-light: #4a4a4a;
   --text-white: #ffffff;
-  --soft-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  --transition-speed: 0.5s;
+  --soft-shadow: 0 12px 40px 0 rgba(255, 117, 140, 0.15);
+  --transition-speed: 0.6s;
 }
 
 [data-theme='dark'] {
-  --primary-pink: #ff2d55;
-  --secondary-purple: #bc13fe;
-  --accent-rose: #ff007f;
-  --bg-gradient: linear-gradient(135deg, #2d0b2e 0%, #1a0521 100%);
-  --glass-bg: rgba(0, 0, 0, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --text-main: #f0f0f0;
+  --primary-pink: #ff0054;
+  --secondary-purple: #9d4edd;
+  --accent-rose: #ff4d6d;
+  --bg-gradient: linear-gradient(135deg, #0b0e14 0%, #1a1d23 100%);
+  --glass-bg: rgba(0, 0, 0, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --text-main: #ffffff;
   --text-light: #b0b0b0;
-  --soft-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  --soft-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.8);
 }
 
 * {
@@ -34,7 +34,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
   background: var(--bg-gradient);
   background-attachment: fixed;
   color: var(--text-main);
@@ -58,10 +58,11 @@ h2,
 }
 
 .gradient-text {
-  background: linear-gradient(to right, var(--primary-pink), var(--accent-rose));
+  background: linear-gradient(to right, var(--primary-pink), var(--secondary-purple));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(255, 77, 109, 0.1));
 }
 
 .section-padding {
